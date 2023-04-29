@@ -68,18 +68,6 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    //MARK: - Operation Functions
-    
-    @objc func addButtonTapped() {
-        // Handle add button tapped (didn't have time to 
-    }
-    
-    func fetchMovies() {
-        //would normally handle this in an async closure, and make sure to interact with UI on the main thread
-        movies = homeViewModel.fetchMovies()
-        moviesCollectionView.reloadData()
-    }
-    
     //MARK: - Layout Functions
     
     func setupLayout(){
@@ -101,8 +89,21 @@ class HomeViewController: UIViewController {
         moviesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         moviesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
+    
+    //MARK: - Operation Functions
+    
+    @objc func addButtonTapped() {
+        // Handle add button tapped (didn't have time to
+    }
+    
+    func fetchMovies() {
+        //would normally handle this in an async closure, and make sure to interact with UI on the main thread
+        movies = homeViewModel.fetchMovies()
+        moviesCollectionView.reloadData()
+    }
 }
 
+//MARK: - CollectionView Delegates
 extension HomeViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
