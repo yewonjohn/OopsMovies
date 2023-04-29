@@ -52,7 +52,7 @@ class MovieDetailsViewController : UIViewController {
         if let navBarHeight = navigationController?.navigationBar.frame.height {
             scrollView.contentInset = UIEdgeInsets(top: -navBarHeight*2, left: 0, bottom: navBarHeight*3, right: 0)
         }
-        let subviews = [posterImageView, movieDetailBodySection]
+        let subviews = [posterImageView, movieDetailsBodySection]
         let totalHeight = subviews.reduce(0) { $0 + $1.frame.height }
 
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: totalHeight * 1.15)
@@ -116,10 +116,10 @@ class MovieDetailsViewController : UIViewController {
         return posterImageView
     }()
     
-    lazy var movieDetailBodySection : MovieDetailBodySection = {
-        let movieDetailBodySection = MovieDetailBodySection(parentView: view, posterTitle: posterTitle, attributes: attributes, titleDescription: titleDescription)
+    lazy var movieDetailsBodySection : MovieDetailsBodySection = {
+        let movieDetailsBodySection = MovieDetailsBodySection(parentView: view, posterTitle: posterTitle, attributes: attributes, titleDescription: titleDescription)
         
-        return movieDetailBodySection
+        return movieDetailsBodySection
     }()
     
     lazy var shareButton : UIButton = {
@@ -152,7 +152,7 @@ class MovieDetailsViewController : UIViewController {
         scrollView.addSubview(backdropImageView)
         scrollView.addSubview(backdropImageOverlay)
         scrollView.addSubview(posterImageView)
-        scrollView.addSubview(movieDetailBodySection)
+        scrollView.addSubview(movieDetailsBodySection)
         view.addSubview(shareButton)
     }
     
@@ -177,8 +177,8 @@ class MovieDetailsViewController : UIViewController {
         posterImageView.heightAnchor.constraint(equalToConstant: (view.layer.frame.height * 0.45)).isActive = true
         posterImageView.widthAnchor.constraint(equalToConstant: (view.layer.frame.width * 0.68)).isActive = true
         
-        movieDetailBodySection.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 32).isActive = true
-        movieDetailBodySection.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        movieDetailsBodySection.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 32).isActive = true
+        movieDetailsBodySection.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         shareButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28).isActive = true
         shareButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28).isActive = true

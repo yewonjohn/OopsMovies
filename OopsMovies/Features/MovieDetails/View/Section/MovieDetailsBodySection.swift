@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MovieDetailBodySection : UIStackView {
+class MovieDetailsBodySection : UIStackView {
     
     lazy var posterTitleView : UIImageView = {
         let posterTitleView = UIImageView()
