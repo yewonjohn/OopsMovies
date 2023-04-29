@@ -52,7 +52,7 @@ class MovieDetailsViewController : UIViewController {
         if let navBarHeight = navigationController?.navigationBar.frame.height {
             scrollView.contentInset = UIEdgeInsets(top: -navBarHeight*2, left: 0, bottom: navBarHeight*3, right: 0)
         }
-        let subviews = [posterImageView, verticalStackView]
+        let subviews = [posterImageView, movieDetailBodySection]
         let totalHeight = subviews.reduce(0) { $0 + $1.frame.height }
 
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: totalHeight * 1.15)
@@ -112,53 +112,14 @@ class MovieDetailsViewController : UIViewController {
         posterImageView.contentMode = .scaleAspectFill
         posterImageView.clipsToBounds = true
         posterImageView.image = UIImage(named: posterImage)
+        
         return posterImageView
     }()
     
-    lazy var verticalStackView : UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 32
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
-    
-    lazy var posterTitleView : UIImageView = {
-        let posterTitleView = UIImageView()
-         posterTitleView.translatesAutoresizingMaskIntoConstraints = false
-         posterTitleView.contentMode = .scaleAspectFill
-         posterTitleView.clipsToBounds = true
-         posterTitleView.image = UIImage(named: posterTitle)
-         return posterTitleView
-    }()
-    
-    lazy var attributeStackView : UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
+    lazy var movieDetailBodySection : MovieDetailBodySection = {
+        let movieDetailBodySection = MovieDetailBodySection(parentView: view, posterTitle: posterTitle, attributes: attributes, titleDescription: titleDescription)
         
-        attributes.is4k ? stackView.addArrangedSubview(UIImageView(image: UIImage(named: "4k_icon"))) : ()
-        attributes.isHDR ? stackView.addArrangedSubview(UIImageView(image: UIImage(named: "hdr_icon"))) : ()
-        attributes.isDolbyAtmos ? stackView.addArrangedSubview(UIImageView(image: UIImage(named: "dolby_atmos_icon"))) : ()
-
-        return stackView
-    }()
-    
-    lazy var descriptionLabel : UILabel = {
-        let descriptionLabel = UILabel()
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.font = UIFont(name: "SFProDisplay-Regular", size: 17)
-        descriptionLabel.text = titleDescription
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .center
-        descriptionLabel.textColor = UIColor.white
-
-        return descriptionLabel
+        return movieDetailBodySection
     }()
     
     lazy var shareButton : UIButton = {
@@ -191,11 +152,7 @@ class MovieDetailsViewController : UIViewController {
         scrollView.addSubview(backdropImageView)
         scrollView.addSubview(backdropImageOverlay)
         scrollView.addSubview(posterImageView)
-        verticalStackView.addArrangedSubview(posterTitleView)
-        verticalStackView.addArrangedSubview(attributeStackView)
-        verticalStackView.addArrangedSubview(descriptionLabel)
-        scrollView.addSubview(verticalStackView)
-
+        scrollView.addSubview(movieDetailBodySection)
         view.addSubview(shareButton)
     }
     
@@ -220,10 +177,8 @@ class MovieDetailsViewController : UIViewController {
         posterImageView.heightAnchor.constraint(equalToConstant: (view.layer.frame.height * 0.45)).isActive = true
         posterImageView.widthAnchor.constraint(equalToConstant: (view.layer.frame.width * 0.68)).isActive = true
         
-        verticalStackView.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 32).isActive = true
-        verticalStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-
-        descriptionLabel.widthAnchor.constraint(equalToConstant: view.frame.width * 0.85).isActive = true
+        movieDetailBodySection.topAnchor.constraint(equalTo: posterImageView.bottomAnchor, constant: 32).isActive = true
+        movieDetailBodySection.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         shareButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28).isActive = true
         shareButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -28).isActive = true
